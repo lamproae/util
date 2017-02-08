@@ -1,0 +1,2 @@
+/home/pi/c/practise/heap/lib/libutil/build/src/CMakeFiles/util.dir
+/home/pi/c/practise/heap/lib/libutil/build/src/CMakeFiles/util_static.dir

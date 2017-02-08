@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pi/c/practise/heap/lib/libutil/src/random.c
+random.h
+/home/pi/c/practise/heap/lib/libutil/src/random.h
+errno.h
+-
+stdlib.h
+-
+sys/time.h
+-
+string.h
+-
+pthread.h
+-
+
+/home/pi/c/practise/heap/lib/libutil/src/random.h
+stddef.h
+-
+stdint.h
+-
+
