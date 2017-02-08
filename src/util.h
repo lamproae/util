@@ -3,6 +3,8 @@
 
 #include <inttypes.h>
 #include <stdbool.h>
+#include <stddef.h>
+
 #define PRIdSIZE "zd"
 #define PRIiSIZE "zi"
 #define PRIoSIZE "zo"
@@ -171,5 +173,7 @@ bool str_to_llong_with_tail(const char *, char **, int base, long long *);
 bool str_to_uint(const char *, int base, unsigned int *);
 bool str_to_llong_range(const char *, int base, long long *, long long *);
 bool str_to_double(const char *, double *);
+int get_entropy(void *buffer, size_t n);
+
 
 #endif /*  __UTIL_H__ */

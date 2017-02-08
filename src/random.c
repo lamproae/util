@@ -25,6 +25,7 @@
 #include <stdio.h>
 
 #include "hash.h"
+#include "util.h"
 
 #define DEFINE_STATIC_PER_THREAD_DATA(TYPE, NAME, ...)                  \
     typedef TYPE NAME##_type;                                           \
@@ -41,8 +42,6 @@
     {                                                                   \
         return NAME##_get_unsafe();                                     \
     }
-
-static const char urandom[] = "/dev/urandom";
 
 int
 read_fully(int fd, void *p_, size_t size, size_t *bytes_read)
@@ -63,28 +62,6 @@ read_fully(int fd, void *p_, size_t size, size_t *bytes_read)
         }
     }
     return 0;
-}
-
-/* Initializes 'buffer' with 'n' bytes of high-quality random numbers.  Returns
- * 0 if successful, otherwise a positive errno value or EOF on error. */
-int
-get_entropy(void *buffer, size_t n)
-{
-    size_t bytes_read;
-    int error;
-    int fd;
-
-    fd = open(urandom, O_RDONLY);
-    if (fd < 0) {
-        return errno ? errno : EINVAL;
-    }
-
-    error = read_fully(fd, buffer, n, &bytes_read);
-    close(fd);
-
-    if (error) {
-    }
-    return error;
 }
 
 /* This is the 32-bit PRNG recommended in G. Marsaglia, "Xorshift RNGs",

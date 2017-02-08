@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <errno.h>
 #include <limits.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include "util.h"
 
@@ -184,3 +185,26 @@ str_to_double(const char *s, double *d)
     }
 }
 
+/* Initializes 'buffer' with 'n' bytes of high-quality random numbers.  Returns
+ * 0 if successful, otherwise a positive errno value or EOF on error. */
+int
+get_entropy(void *buffer, size_t n)
+{
+    size_t bytes_read;
+    int error;
+    int fd;
+
+    static const char urandom[] = "/dev/urandom";
+
+    fd = open(urandom, O_RDONLY);
+    if (fd < 0) {
+        return errno ? errno : EINVAL;
+    }
+
+    error = read_fully(fd, buffer, n, &bytes_read);
+    close(fd);
+
+    if (error) {
+    }
+    return error;
+}
