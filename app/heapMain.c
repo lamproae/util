@@ -5,7 +5,8 @@
 #include "fault.h"
 
 void test2() {
-    do_log_backtrace();
+    int *k = NULL;
+    *k = 10;
 }
 
 void test1() {
@@ -19,10 +20,13 @@ void test() {
 int main(int argc, char** argv)
 {   
     register_fault_handlers();
-    printf("%d\n", random_uint32());
-    printf("%lu\n", random_uint64());
     leak_checker_start("liwei.log");
     int* i = malloc(sizeof(int));
+     i = malloc(sizeof(int));
+     i = malloc(sizeof(int));
+     i = malloc(sizeof(int));
+     free(i);
+     i = malloc(sizeof(int));
     leak_checker_stop();
     test();
 }

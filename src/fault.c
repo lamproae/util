@@ -56,7 +56,6 @@ static void
 fault_handler(int sig_nr)
 {
     llog(FATAL, "Caught signal %d.", sig_nr);
-       llog(FATAL, "[%s][%d]---------------\n", __func__, __LINE__);
     do_log_backtrace();
     fflush(stdout);
     fflush(stderr);
@@ -68,7 +67,6 @@ fault_handler(int sig_nr)
 void
 do_log_backtrace(void)
 {
-       llog(FATAL, "[%s][%d]---------------\n", __func__, __LINE__);
        /* During the loop:
 
        frame[0] points to the next frame.
@@ -81,12 +79,10 @@ do_log_backtrace(void)
          && stack_depth < STACK_DEPTH_LIMIT;
          frame = frame[0], ++stack_depth) {
         Dl_info addrinfo;
-        llog(FATAL, "[%s][%d]---------------\n", __func__, __LINE__);
         if (!dladdr(frame[1], &addrinfo) || !addrinfo.dli_sname) {
-           // fprintf(stderr, "  0x%08"PRIxPTR"\n", (uintptr_t) frame[1]);
-            fprintf(stderr, "  0x%08p""\n", (uintptr_t) frame[1]);
+            fprintf(stderr, "  0x%08"PRIxPTR"\n", (uintptr_t) frame[1]);
         } else {
-            fprintf(stderr, "  0x%08p"" (%s+0x%x)\n",
+            fprintf(stderr, "  0x%08"PRIxPTR" (%s+0x%x)\n",
                     (uintptr_t) frame[1], addrinfo.dli_sname,
                     (char *) frame[1] - (char *) addrinfo.dli_saddr); 
         }
