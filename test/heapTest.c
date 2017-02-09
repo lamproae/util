@@ -201,7 +201,7 @@ int main(int argc, char** argv)
     RUN_TEST(test_array_list_clear);
     RUN_TEST(test_arrary_list_delete);
     RUN_TEST(test_array_list_clear);
-    RUN_TEST(test_array_list_insert_sort);
+   // RUN_TEST(test_array_list_insert_sort);
     RUN_TEST(test_array_list_destroy);
 
     UNITY_END();
