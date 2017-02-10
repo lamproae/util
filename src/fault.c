@@ -67,27 +67,27 @@ fault_handler(int sig_nr)
 void
 do_log_backtrace(void)
 {
-       /* During the loop:
-
-       frame[0] points to the next frame.
-       frame[1] points to the return address. */
-    void **frame;
 #define STACK_DEPTH_LIMIT	128
-    int stack_depth = 0;
-    for (frame = __builtin_frame_address(0);
-         frame != NULL && frame[0] != NULL
-         && stack_depth < STACK_DEPTH_LIMIT;
-         frame = frame[0], ++stack_depth) {
-        Dl_info addrinfo;
-        if (!dladdr(frame[1], &addrinfo) || !addrinfo.dli_sname) {
-            fprintf(stderr, "  0x%08"PRIxPTR"\n", (uintptr_t) frame[1]);
-        } else {
-            fprintf(stderr, "  0x%08"PRIxPTR" (%s+0x%x)\n",
-                    (uintptr_t) frame[1], addrinfo.dli_sname,
-                    (char *) frame[1] - (char *) addrinfo.dli_saddr); 
-        }
+    void *array[STACK_DEPTH_LIMIT];
+    size_t size;
+    char **strings;
+    size_t i;
+    size = backtrace (array, 10);
+    strings = backtrace_symbols (array, size);
+    if (NULL == strings)
+    {
+        perror("backtrace_synbols");
+        exit(EXIT_FAILURE);
     }
-    fflush(stderr);
+
+    printf ("Obtained %d stack frames.\n", size);
+    printf ("Obtained %zd stack frames.\n", size);
+
+    for (i = 0; i < size; i++)
+        printf ("%s\n", strings[i]);
+
+    free (strings);
+    strings = NULL;
 }
 
 void

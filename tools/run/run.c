@@ -43,7 +43,8 @@ int main(int argc, char** argv)
     system(command);
     sprintf(command, "gprof ./%s > gprof.log 2>&1", argv[1]);
     system(command);
-
+    sprintf(command, "mtrace ./%s %s> memleak_detect.log 2>&1", argv[1], "leak_detector.log");
+    system(command);
     /*  Need to Add gcov support for code coverage test in future */
 }
 
